@@ -1,0 +1,13 @@
+[
+    {"id1":"1","id2":"2","distance":3.2,"roaddistance":8.27},
+    {"id1":"1","id2":"3","distance":10.25,"roaddistance":16},
+    {"id1":"1","id2":"4","distance":17.56,"roaddistance":23},
+    {"id1":"1","id2":"5","distance":6.92,"roaddistance":12},
+    {"id1":"2","id2":"3","distance":3.69,"roaddistance":5.74},
+    {"id1":"2","id2":"4","distance":15.82,"roaddistance":19.29},
+    {"id1":"2","id2":"5","distance":6.36,"roaddistance":8.78},
+    {"id1":"3","id2":"4","distance":14.2,"roaddistance":21},
+    {"id1":"3","id2":"5","distance":7.44,"roaddistance":11.53},
+    {"id1":"3","id2":"6","distance":30.33,"roaddistance":43},
+    {"id1":"4","id2":"5","distance":21.84,"roaddistance":27}
+]
