@@ -1,7 +1,9 @@
 [
-    {"name":"El Prat de Llobregat","id":"1","lon":2.093821,"lat":41.3278},
-    {"name":"Cornellà de Llobregat","id":"2","lon":2.072954,"lat":41.354399},
+    {"name":"El Prat de Llobregat","id":"1","lon":2.09594,"lat":41.312},
+    {"name":"Hospitalet de Llobregat","id":"2","lon":2.116416,"lat":41.361337},
     {"name":"Sant Feliu de Llobregat","id":"3","lon":2.05182,"lat":41.398},
-    {"name":"Santa Coloma de Gramenet","id":"4","lon":2.21032,"lat":41.4446},
-    {"name":"Viladecans","id":"5","lon":2.01317,"lat":41.3154}
+    {"name":"Badalona","id":"4","lon":2.24503,"lat":41.447},
+    {"name":"Viladecans","id":"5","lon":2.01317,"lat":41.3154},
+    {"name":"Sant Andreu de la Barca","id":"6","lon":1.97283,"lat":41.447},
+    {"name":"Sant Cugat","id":"7","lon":2.07633,"lat":41.4526}
 ]
