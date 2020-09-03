@@ -1,0 +1,4 @@
+Create the application on Heroku: heroku create app_name -r remote_name
+ex: heroku create n-queens-dwave -r n-queens-remote
+Deploy (first change the Procfile and put the appropiate app_name): heroku git remote_name push master
+ex: heroku git remote_name push master

@@ -8,6 +8,7 @@ from matplotlib.colors import ListedColormap
 import neal
 import streamlit as st
 import pandas as pd
+import SessionState
 
 #Set the problem as a QUBO: 
 #Solution: a sequence of squares that represents the board with queens in it
@@ -190,6 +191,8 @@ def choosevar (linear, quadratic, board):
         if board.check_solution():
             return board.get_plot()
             
+placed_queens_empty = pd.DataFrame ([], columns = ['square'])            
+state = SessionState.get(placed_queens = placed_queens_empty )
 
 st.title('N-queens problem')
 
@@ -216,22 +219,20 @@ s=st.sidebar.slider('Board size', 4, 10, 8)
 board = Chessboard(s)
 square_list = board.get_square_list()
 
-placed_queens = pd.read_json('selected_squares.json')
-if not placed_queens.empty:
-    placed_queens.set_index('square')
+#placed_queens = pd.read_json('selected_squares.json')
+if not state.placed_queens.empty:
+    state.placed_queens.set_index('square')
 
 square_name=st.sidebar.text_input('Square name (example c0r0,c3r4,...)')
 if st.sidebar.button('Add'):
     square={'square':square_name}
-    placed_queens=placed_queens.append(square,ignore_index=True)
-    placed_queens.to_json('selected_squares.json')
+    state.placed_queens = state.placed_queens.append(square,ignore_index=True)
 
 if st.sidebar.button('Remove'):
-    placed_queens.drop(placed_queens[(placed_queens.square==square_name)].index, inplace=True)
-    placed_queens.to_json('selected_squares.json')
+    state.placed_queens.drop(state.placed_queens[(state.placed_queens.square==square_name)].index, inplace=True)
 
-st.write('You selected:', placed_queens)
-board.set_queens_by_name(placed_queens)
+st.write('You selected:', state.placed_queens)
+board.set_queens_by_name(state.placed_queens)
 energy = board.count_queens()*(-1) + board.count_dead_queens()*2
 st.write('Your energy:', energy)
 energy_sol = s*(-1)
