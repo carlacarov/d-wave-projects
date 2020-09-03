@@ -1,4 +1,6 @@
+Instructions from https://towardsdatascience.com/how-to-deploy-your-data-science-as-web-apps-easily-with-python-955dd462a9b5
+
 Create the application on Heroku: heroku create app_name -r remote_name
 ex: heroku create n-queens-dwave -r n-queens-remote
-Deploy (first change the Procfile and put the appropiate app_name): heroku git remote_name push master
-ex: heroku git remote_name push master
+Deploy (first change the Procfile and put the appropiate app_name): git push remote_name master
+ex: git push n-queens-remote master
