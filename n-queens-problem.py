@@ -6,6 +6,9 @@ import dimod
 import matplotlib.pyplot as plt
 from matplotlib.colors import ListedColormap
 import neal
+import dwave.inspector
+from dwave.system import EmbeddingComposite
+from dwave.system import DWaveSampler
 
 #Set the problem as a QUBO: 
 #Solution: a sequence of squares that represents the board with queens in it
@@ -116,10 +119,15 @@ def coefficients ():
 #Lowest energy solution, where there's 1 queen per row and 1 per column
 def choosevar (linear, quadratic):
     bqm = dimod.BinaryQuadraticModel(linear, quadratic, 0, 'BINARY')
-    sampler = neal.SimulatedAnnealingSampler()
+    #sampler = neal.SimulatedAnnealingSampler()
+    sampler = EmbeddingComposite(DWaveSampler())
+
     #100 samples gets several valid solutions
     num_iter = int(100)
-    sampleset = sampler.sample(bqm, num_reads=num_iter)
+    sampleset = sampler.sample(bqm, num_reads=num_iter, chain_strength=2.0)
+    #install with: dwave install inspector
+    dwave.inspector.show(sampleset)
+
     sampleset_iterator = sampleset.samples(num_iter)
     print(sampleset)
 
@@ -135,7 +143,7 @@ def choosevar (linear, quadratic):
 
 
 #Instance an object of the class
-s=5
+s=4
 b1 = Chessboard(s)
 linear, quadratic = coefficients()
 choosevar(linear,quadratic)
