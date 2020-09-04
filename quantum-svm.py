@@ -14,6 +14,7 @@ from sklearn.model_selection import train_test_split
 from imblearn.under_sampling import RandomUnderSampler
 import dwave.system.samplers as dw
 from dwave.system import EmbeddingComposite
+import dwave.inspector
 
 #Load the dataset from a path in your computer, and divide it into the x and y
 #according to the columns that belong to the data points and the column of labels
@@ -368,6 +369,7 @@ class dwaveSVM:
             self.bqm = dimod.BinaryQuadraticModel(self.linear, self.quadratic, 0, 'BINARY')
             self.sampler = EmbeddingComposite(dw.DWaveSampler())
             self.sampleset = self.sampler.sample(self.bqm, num_reads=self.num_iter)
+            dwave.inspector.show(self.sampleset)
             self.sampleset_iterator = self.sampleset.samples(self.num_iter)
 
             #Check the samples until one which fulfills the constraint is found.
@@ -417,19 +419,19 @@ xtrain, xtest, ytrain, ytest, num_train_samples = split_data(x,y,0.7)
 
 #Instance an object for each of the classes, which are the distinct SVM models, and use the evaluate() 
 #and the eval_roc_curve() functions to obtain the classification metrics and then save them with save_files()
-classic_model = classicSVM(xtrain,ytrain,xtest,7,'rbf')
-classic_yscore = classic_model.get_yscore()
-classic_predictions = classic_model.get_predictions()
-classic_precision, classic_recall, classic_f1, classic_accuracy = evaluate(classic_predictions)
-eval_roc_curve(classic_yscore,'Classic ROC and AUC')
-save_files(path,'classic-results.txt',classic_precision, classic_recall, classic_f1, classic_accuracy)
+#classic_model = classicSVM(xtrain,ytrain,xtest,7,'rbf')
+#classic_yscore = classic_model.get_yscore()
+#classic_predictions = classic_model.get_predictions()
+#classic_precision, classic_recall, classic_f1, classic_accuracy = evaluate(classic_predictions)
+#eval_roc_curve(classic_yscore,'Classic ROC and AUC')
+#save_files(path,'classic-results.txt',classic_precision, classic_recall, classic_f1, classic_accuracy)
 
-sim_model = simulated_annealingSVM(xtrain,ytrain,xtest,num_samples,num_train_samples,num_features,2,1000)
-sim_yscore = sim_model.get_yscore()
-sim_predictions = sim_model.get_predictions()
-sim_precision, sim_recall, sim_f1, sim_accuracy = evaluate(sim_predictions)
-eval_roc_curve(sim_yscore,'Simulated annealing ROC and AUC')
-save_files(path,'sim-results.txt',sim_precision, sim_recall, sim_f1, sim_accuracy)
+#sim_model = simulated_annealingSVM(xtrain,ytrain,xtest,num_samples,num_train_samples,num_features,2,1000)
+#sim_yscore = sim_model.get_yscore()
+#sim_predictions = sim_model.get_predictions()
+#sim_precision, sim_recall, sim_f1, sim_accuracy = evaluate(sim_predictions)
+#eval_roc_curve(sim_yscore,'Simulated annealing ROC and AUC')
+#save_files(path,'sim-results.txt',sim_precision, sim_recall, sim_f1, sim_accuracy)
 
 dwave_model = dwaveSVM(xtrain,ytrain,xtest,num_samples,num_train_samples,num_features,2,1000,5,9)
 dwave_yscore = dwave_model.get_yscore()
