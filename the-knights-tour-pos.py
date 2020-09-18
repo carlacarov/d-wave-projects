@@ -126,7 +126,7 @@ def initialize_board(board_size=4):
 
 def show_solution_board(solution):
     board = initialize_board(board_size)
-    cmap = ListedColormap(['k', 'w', 'g'])  # black, white, green
+    cmap = ListedColormap(['k', 'g', 'w'])  # black, white, green
     fig, ax = plt.subplots()
     ax.matshow(board, cmap=cmap)
     for el in solution:

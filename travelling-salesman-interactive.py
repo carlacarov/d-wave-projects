@@ -200,6 +200,6 @@ st.text(' represents the solution to your problem.')
 
 st.text('This problem is solved using the dwave´s sdk high level function dnx.traveling_salesperson')
 st.text('Behind the scenes it creates a QUBO formulation where each binary variable labelled c, t')
-st.text(' represents the city c visited in step t')
+st.text(' represents the city c visited in step t.')
 st.text('Then it sets quadratic coefficients to minimise distance subject to the constraint: ')
-st.text('Each city visited exactly once')
+st.text('Each city visited exactly once.')

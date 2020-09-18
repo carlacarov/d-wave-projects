@@ -244,10 +244,11 @@ if st.sidebar.button('Remove'):
 st.write('You selected:', state.placed_queens)
 try:
     board.set_queens_by_name(state.placed_queens)
-except ValueError:
+except (ValueError, IndexError):
     state.placed_queens.drop(state.placed_queens[(
-    state.placed_queens.square == square_name)].index, inplace=True)
-    st.error('Invalid input. Please enter cXrY (X=col number, Y=row number). Example c3r5')  
+        state.placed_queens.square == square_name)].index, inplace=True)
+    st.error('Invalid input. Please enter cXrY (X=col number<=board size, Y=row number<=board size). Example c3r5')
+
 energy = board.count_queens()*(-1) + board.count_dead_queens()*2
 st.write('Your energy:', energy)
 energy_sol = s*(-1)

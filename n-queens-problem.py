@@ -127,14 +127,14 @@ def coefficients():
 
 def choosevar(linear, quadratic):
     bqm = dimod.BinaryQuadraticModel(linear, quadratic, 0, 'BINARY')
-    #sampler = neal.SimulatedAnnealingSampler()
-    sampler = EmbeddingComposite(DWaveSampler())
+    sampler = neal.SimulatedAnnealingSampler()
+    #sampler = EmbeddingComposite(DWaveSampler())
 
     # 100 samples gets several valid solutions
     num_iter = int(100)
     sampleset = sampler.sample(bqm, num_reads=num_iter, chain_strength=2.0)
     # install with: dwave install inspector
-    dwave.inspector.show(sampleset)
+    #dwave.inspector.show(sampleset)
 
     sampleset_iterator = sampleset.samples(num_iter)
     print(sampleset)

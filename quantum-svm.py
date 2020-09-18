@@ -25,7 +25,7 @@ def load_dataset(path, filename, first_feature_col, last_feature_col, label_col)
     # Remove those samples that have na values '?'
     data_frame.dropna(inplace=True)
     # Choose the columns that correspond to the features of x
-    x = data_frame.iloc[:, first_feature_col:last_feature_col].to_numpy()
+    x = data_frame.iloc[:, first_feature_col:last_feature_col+1].to_numpy()
     # Choose the column that corresponds to the labels
     y = data_frame.iloc[:, label_col].to_numpy()
     return x, y
@@ -36,9 +36,10 @@ def load_dataset(path, filename, first_feature_col, last_feature_col, label_col)
 def preprocess(x, y, sampling_strategy, wrong_target):
     # In case that the dataset is imbalanced, you can undersample it with some sampling strategy.
     # If you set sampling_strategy=0.5, it will mean that the ratio between the classes is 1:2.
-    # If the dataset isn't imbalanced, the sampling_strategy can be equal to 1
-    undersample = RandomUnderSampler(sampling_strategy=sampling_strategy)
-    x, y = undersample.fit_resample(x, y)
+    #If the dataset isn't imbalanced, the sampling_strategy equals 1 and we leave dataset as it is
+    if (sampling_strategy!=1):
+        undersample = RandomUnderSampler(sampling_strategy=sampling_strategy)
+        x, y = undersample.fit_resample(x, y)
     num_samples = len(x)
     num_features = len(x[0])
     # preprocessing.scale() scales the data to values between 0 and 1
@@ -488,11 +489,11 @@ save_files(path, 'sim-results.txt', sim_precision,
            sim_recall, sim_f1, sim_accuracy)
 
 dwave_model = DwaveSVM(xtrain, ytrain, xtest, num_samples,
-                       num_train_samples, num_features, 2, 1000, 5, 9)
+                    num_train_samples, num_features, 2, 1000, 5, 9)
 dwave_yscore = dwave_model.get_yscore()
 dwave_predictions = dwave_model.get_predictions()
 dwave_precision, dwave_recall, dwave_f1, dwave_accuracy = evaluate(
     dwave_predictions)
 eval_roc_curve(dwave_yscore, 'D-Wave ROC and AUC')
 save_files(path, 'dwave-results.txt', dwave_precision,
-           dwave_recall, dwave_f1, dwave_accuracy)
+        dwave_recall, dwave_f1, dwave_accuracy)
