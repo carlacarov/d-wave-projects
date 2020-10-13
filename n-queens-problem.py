@@ -5,7 +5,7 @@ from itertools import combinations
 import dimod
 import matplotlib.pyplot as plt
 from matplotlib.colors import ListedColormap
-import neal
+#import neal
 import dwave.inspector
 from dwave.system import EmbeddingComposite
 from dwave.system import DWaveSampler
@@ -127,12 +127,13 @@ def coefficients():
 
 def choosevar(linear, quadratic):
     bqm = dimod.BinaryQuadraticModel(linear, quadratic, 0, 'BINARY')
-    sampler = neal.SimulatedAnnealingSampler()
-    #sampler = EmbeddingComposite(DWaveSampler())
+    #sampler = neal.SimulatedAnnealingSampler()
+    sampler = EmbeddingComposite(DWaveSampler())
 
     # 100 samples gets several valid solutions
-    num_iter = int(100)
-    sampleset = sampler.sample(bqm, num_reads=num_iter, chain_strength=2.0)
+    # for larger boards, n>=7, you should probably use 10000 instead
+    num_iter = int(10000)
+    sampleset = sampler.sample(bqm, num_reads=num_iter)
     # install with: dwave install inspector
     #dwave.inspector.show(sampleset)
 
@@ -151,7 +152,7 @@ def choosevar(linear, quadratic):
 
 
 # Instance an object of the class
-s = 4
+s = 8
 b1 = Chessboard(s)
 linear, quadratic = coefficients()
 choosevar(linear, quadratic)
